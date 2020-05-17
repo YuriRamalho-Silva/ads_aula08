@@ -31,14 +31,16 @@ public class ComprarFilmesController extends HttpServlet {
 		ArrayList<Filme> carrinho = null;
 		ArrayList<Integer> listaIds = null;
 		Filme filme = null;
+		ArrayList<Filme> filmes = null;
 		int idFilme = -1;
+		Object aux = null;
 
 		switch (acao) {
 		case "btn-comprar-de-exibir-filmes-jsp":
 			ArrayList<Integer> lista = obterIds(request);
-			ArrayList<Filme> filmes = fService.listarFilmes(lista);
+			 filmes = fService.listarFilmes(listaIds);
 			// pegar o carrinho da sessão e ver se já tem filmes
-			Object aux = session.getAttribute("filmes");
+			aux = session.getAttribute("filmes");
 			if (aux != null && aux instanceof ArrayList<?>) {
 				carrinho = (ArrayList<Filme>) aux;
 				if (carrinho.size() > 0) {
@@ -74,8 +76,28 @@ public class ComprarFilmesController extends HttpServlet {
 			request.setAttribute("filme", filme);
 			saida = "Filme.jsp";
 			break;
+		
+		case "btn-excluir-de-modal-carrinho-jsp":
+			 lista = obterIds(request);
+			 filmes = fService.listarFilmes(lista);
+			// pegar o carrinho da sessão e ver se já tem filmes
+			aux = session.getAttribute("filmes");
+			if (aux != null && aux instanceof ArrayList<?>) {
+				carrinho = (ArrayList<Filme>) aux;
+				if (carrinho.size() > 0) {
+					for (Filme f : filmes) {
+						carrinho.add(f);
+					}
+				} else {
+					carrinho = filmes;
+				}
+			} else {
+				carrinho = filmes;
+			}
+			session.setAttribute("filmes", carrinho);
+			saida = "Carrinho.jsp";
+			break;
 		}
-
 		RequestDispatcher view = request.getRequestDispatcher(saida);
 		view.forward(request, response);
 	}

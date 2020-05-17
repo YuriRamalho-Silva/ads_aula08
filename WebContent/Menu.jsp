@@ -23,7 +23,7 @@
 						</ul>
                     </li>
 					<li><a href="comprar_filmes.do?acao=menu-comprar-filmes-de-menu-jsp">Comprar Filmes</a></li>
-					<li><a href="#">Carrinho de Compras</a></li>
+					<li><a href="comprar_filmes.do?acao=btn-comprar-filmes-de-menu-jsp">Carrinho de Compras</a></li>
 				</ul>
 			</div>
 			<!--/.nav-collapse -->
