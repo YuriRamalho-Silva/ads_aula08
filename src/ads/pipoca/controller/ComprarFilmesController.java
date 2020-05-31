@@ -37,7 +37,7 @@ public class ComprarFilmesController extends HttpServlet {
 
 		switch (acao) {
 		case "btn-comprar-de-exibir-filmes-jsp":
-			ArrayList<Integer> lista = obterIds(request);
+			listaIds = obterIds(request);
 			 filmes = fService.listarFilmes(listaIds);
 			// pegar o carrinho da sessão e ver se já tem filmes
 			aux = session.getAttribute("filmes");
@@ -78,8 +78,8 @@ public class ComprarFilmesController extends HttpServlet {
 			break;
 		
 		case "btn-excluir-de-modal-carrinho-jsp":
-			 lista = obterIds(request);
-			 filmes = fService.listarFilmes(lista);
+			 listaIds = obterIds(request);
+			 filmes = fService.listarFilmes(listaIds);
 			// pegar o carrinho da sessão e ver se já tem filmes
 			aux = session.getAttribute("filmes");
 			if (aux != null && aux instanceof ArrayList<?>) {
@@ -97,7 +97,15 @@ public class ComprarFilmesController extends HttpServlet {
 			session.setAttribute("filmes", carrinho);
 			saida = "Carrinho.jsp";
 			break;
+			
+		case "btn-finalizar-de-carrinho-jsp":
+			session.setAttribute("filmes", carrinho);
+			carrinho = null;
+			saida = "ObrigadoPelaCompra.jsp";
+			break;
 		}
+		
+		
 		RequestDispatcher view = request.getRequestDispatcher(saida);
 		view.forward(request, response);
 	}

@@ -56,22 +56,21 @@ public class ManterFilmesController extends HttpServlet {
 			request.setAttribute("generos", generos);
 			saida = "InserirFilme.jsp";
 			break;
-		case "btn-visualizar-de-listar-filmes-jsp":
-			pars = request.getParameterNames();
-			listaIds = new ArrayList<>();
-			try {
-				while ((par = pars.nextElement()) != null) {
-					if (par.startsWith("box")) {
-						System.out.println(par +" = "+Arrays.toString(request.getParameterValues(par)));
-						vals = request.getParameterValues(par);
-						if (vals != null && vals.length > 0 && vals[0].equals("on")) {
-							listaIds.add(Integer.parseInt(par.substring(3)));
-						}
-					}
-				}
-			} catch(NoSuchElementException nsee) {
+			
+		case "btn-visualizar-de-exibir-filmes-jsp":
+			listaIds = obterIds(request);
+			if (listaIds != null && listaIds.size() > 0) {
+				idFilme = listaIds.get(0);
+			} else {
+				idFilme = -1;
 			}
-			System.out.println("Editar listaIds = "+listaIds);
+
+			filme = fService.buscarFilme(idFilme);
+			System.out.println(filme);
+			request.setAttribute("filme", filme);
+			saida = "Filme.jsp";
+			break;
+		
 		case "btn-mostrar-de-mostrar-filme-jsp":
 			id_filme = request.getParameter("id_filme");
 			if (id_filme != null) {
@@ -241,6 +240,27 @@ public class ManterFilmesController extends HttpServlet {
 		view.forward(request, response);
 		
 	}
+	private ArrayList<Integer> obterIds(HttpServletRequest request) {
+		Enumeration<String> pars = request.getParameterNames();
+		ArrayList<Integer> listaIds = new ArrayList<>();
+		String par;
+		String[] vals = null;
+
+		try {
+			while ((par = pars.nextElement()) != null) {
+				if (par.startsWith("box")) {
+					System.out.println(par + " = " + Arrays.toString(request.getParameterValues(par)));
+					vals = request.getParameterValues(par);
+					if (vals != null && vals.length > 0 && vals[0].equals("on")) {
+						listaIds.add(Integer.parseInt(par.substring(3)));
+					}
+				}
+			}
+		} catch (NoSuchElementException nsee) {
+		}
+		return listaIds;
+	}
+
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub

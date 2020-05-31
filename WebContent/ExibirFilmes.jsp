@@ -47,12 +47,16 @@
     		if (caixas.length == 0){
     			document.getElementById("btnVisualizar").disabled = true;
     			document.getElementById("btnComprar").disabled = true;
+    			document.getElementById("btnFinalizar").disabled = true;
     		} else if (caixas.length == 1){
     			document.getElementById("btnVisualizar").disabled = false;
     			document.getElementById("btnComprar").disabled = false;
+    			document.getElementById("btnFinalizar").disabled = false;
     		} else {
     			document.getElementById("btnVisualizar").disabled = true;
     			document.getElementById("btnComprar").disabled = false;
+    			document.getElementById("btnFinalizar").disabled = false;
+
    			}
     	}
     </script>
@@ -114,7 +118,7 @@
 		<hr>
 			<div id="actions" class="row">
 				<div class="col-md-12">
-					<button type="submit" id="btnVisualizar" name="acao" value="btn-visualizar-de-exibir-filmes-jsp" class="btn btn-info" disabled>Visualizar</button>
+					<button type="submit" id="btnVisualizar" name="acao" value="btn-visualizar-de-carrinho-jsp" class="btn btn-info" disabled>Visualizar</button>
 					<button type="submit" class="btn btn-success" id="btnComprar" name="acao" value="btn-comprar-de-exibir-filmes-jsp" disabled>Comprar</button>
 					<a href="index.jsp" class="btn btn-default">Voltar</a>
 				</div>
